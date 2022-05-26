@@ -1,5 +1,4 @@
 
-
 import static org.junit.Assert.*;
 
 import java.util.NoSuchElementException;
@@ -12,11 +11,11 @@ public class DequeTest {
 	private Deque<String> list;
 
 	@Before
-	public void setup(){
+	public void setup() {
 		list = new Deque<String>();
 	}
 
-	@Test (timeout = 500)
+	@Test(timeout = 500)
 	public void testaddFirstIsEmptySizeAndRemoveFirst() {
 		assertTrue("Newly constructed list should be empty.", list.isEmpty());
 		assertEquals("Newly constructed list should be size 0.", 0, list.size());
@@ -31,7 +30,7 @@ public class DequeTest {
 		assertEquals("First element should .equals \"world\".", "world", list.removeFirst());
 	}
 
-	@Test (timeout = 500)
+	@Test(timeout = 500)
 	public void testaddLastIsEmptySizeAndRemoveLast() {
 		assertTrue("Newly constructed list should be empty.", list.isEmpty());
 		assertEquals("Newly constructed list should be size 0.", 0, list.size());
@@ -47,8 +46,7 @@ public class DequeTest {
 
 	}
 
-
-	@Test (timeout = 500)
+	@Test(timeout = 500)
 	public void testaddFirstRemoveFirstSizeAndIsEmpty() {
 		assertTrue("Newly constructed list should be empty.", list.isEmpty());
 		list.addFirst("hello");
@@ -64,7 +62,7 @@ public class DequeTest {
 		assertTrue("All elements removed, list should be empty.", list.isEmpty());
 	}
 
-	@Test (timeout = 500)
+	@Test(timeout = 500)
 	public void testaddLastRemoveLastSizeAndIsEmpty() {
 		assertTrue("Newly constructed list should be empty.", list.isEmpty());
 		list.addLast("hello");
@@ -80,14 +78,41 @@ public class DequeTest {
 		assertTrue("All elements removed, list should be empty.", list.isEmpty());
 	}
 
-	@Test (timeout = 500, expected = NoSuchElementException.class)
+	@Test(timeout = 500, expected = NoSuchElementException.class)
 	public void testExceptionOnEmptyRemoveFirst() {
 		list.removeFirst();
 	}
 
-	@Test (timeout = 500, expected = NoSuchElementException.class)
+	@Test(timeout = 500, expected = NoSuchElementException.class)
 	public void testExceptionOnEmptyRemoveLast() {
 		list.removeLast();
+	}
+
+	// test 1
+	@Test(timeout = 500)
+	public void testAddFirstRemoveLast() {
+		list.addFirst("item");
+		assertEquals("item", list.removeLast());
+	}
+
+	// test 2
+	@Test(timeout = 500)
+	public void testAddLastRemoveFirst() {
+		list.addLast("item");
+		assertEquals("item", list.removeFirst());
+	}
+
+	// test 3
+	@Test(timeout = 500)
+	public void testAddManyAndRemove() {
+		list.addLast("third");
+		list.addFirst("second");
+		list.addLast("fourth");
+		list.addFirst("first");
+		assertEquals("first", list.removeFirst());
+		assertEquals("second", list.removeFirst());
+		assertEquals("third", list.removeFirst());
+		assertEquals("fourth", list.removeFirst());
 	}
 
 }
