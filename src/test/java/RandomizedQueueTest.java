@@ -5,8 +5,11 @@ import org.junit.Test;
 
 public class RandomizedQueueTest {
 
+	private RandomizedQueue<String> list;
+
 	@Before
 	public void setUp() throws Exception {
+		list = new RandomizedQueue<String>();
 	}
 
 	@Test
