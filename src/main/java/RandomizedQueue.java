@@ -19,29 +19,52 @@ import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdRandom;
 
+/**
+ * @author sagesilberman
+ * 
+ *         Represents a program which directs the random addition or removal of
+ *         items from a list
+ * 
+ * @param <Item>
+ */
 public class RandomizedQueue<Item> implements Iterable<Item> {
 	private int count; // // indicates number of elements stored
 	private Item[] arr; // the array
 	private final Item[] randomized; // the array
 
-	// done: construct an empty randomized queue
+	/**
+	 * Constructs an empty randomized queue
+	 */
 	public RandomizedQueue() {
 		arr = (Item[]) new Object[1];
 		randomized = arr;
 		StdRandom.shuffle(randomized);
 	}
 
-	// done: is the randomized queue empty?
+	/**
+	 * If the size of the list is 0, return <code>true</code>
+	 * 
+	 * @return <code>true</code> if the size of the list is 0
+	 */
 	public boolean isEmpty() {
 		return count == 0;
 	}
 
-	// done: return the number of items on the randomized queue
+	/**
+	 * Returns the number of items in the randomized queue
+	 * 
+	 * @return the number of items in the randomized queue
+	 */
 	public int size() {
 		return count;
 	}
 
-	// add the item
+	/**
+	 * Adds an item to the list by resizing the array length and adding the item to
+	 * the end
+	 * 
+	 * @param item is the element added to the end of the list
+	 */
 	public void enqueue(Item item) {
 		if (item == null) {
 			throw new IllegalArgumentException("you need to enter an item!");
@@ -52,7 +75,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		arr[count++] = item;
 	}
 
-	// remove and return a random item
+	/**
+	 * Removes and returns a random item from the list
+	 * 
+	 * @return the random removed item
+	 */
 	public Item dequeue() {
 		if (isEmpty()) {
 			throw new NoSuchElementException("no elements inside the array");
@@ -68,7 +95,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		return item;
 	}
 
-	// done: return a random item (but do not remove it)
+	/**
+	 * Returns a random item from the list
+	 * 
+	 * @return the random item
+	 */
 	public Item sample() {
 		if (isEmpty()) {
 			throw new NoSuchElementException("no elements inside the array");
@@ -77,7 +108,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		return arr[random];
 	}
 
-	// private
+	/**
+	 * Alters the size of the array by creating a copy of the array with the number
+	 * of indexes specified in capacity
+	 * 
+	 * @param capacity is the number of indexes the new array will have
+	 */
 	private void resize(int capacity) {
 		Item[] copy = (Item[]) new Object[capacity];
 		for (int i = 0; i < count; i++)
@@ -85,7 +121,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		arr = copy;
 	}
 
-	// private
+	/**
+	 * Swaps the item at index x with the item at the end of the list
+	 * 
+	 * @param x is the index of the item to be swapped
+	 */
 	private void swap(int x) {
 		Item txt;
 		txt = arr[x];
@@ -93,25 +133,35 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		arr[count - 1] = txt;
 	}
 
-	// done: return an independent iterator over items in random order
+	/**
+	 * Returns an iterator over items in random order
+	 */
 	public Iterator<Item> iterator() {
 		return new ListIterator();
 	}
 
-	// private
+	/**
+	 * Represents an iterator which allows the traversal through the list of items
+	 */
 	private class ListIterator implements Iterator<Item> {
-		private int current;
-		private final Item[] shuffledArr;
+		private int current; // the current size of the array
+		private final Item[] shuffledArr; // maintains the randomized order of the array
 
 		public ListIterator() {
 			current = count;
 			shuffledArr = arr;
 		}
 
+		/**
+		 * Returns <code>true</code> if the current size is greater than 0
+		 */
 		public boolean hasNext() {
 			return current > 0;
 		}
 
+		/**
+		 * If an item has a next element,
+		 */
 		public Item next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException("it's empty so can't execute code");
@@ -120,13 +170,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 		}
 
+		/**
+		 * Prevents unspecified removal of an item
+		 */
 		public void remove() {
 			throw new UnsupportedOperationException("opperation is unsupported");
 		}
 	}
 
 	public static void main(String[] args) {
-		// unit testing (optional)
+// unit testing (optional)
 
 	}
 }
