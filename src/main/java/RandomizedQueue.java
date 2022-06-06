@@ -147,21 +147,20 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		private int current; // the current size of the array
 		private final Item[] shuffledArr; // maintains the randomized order of the array
 
+		/**
+		 * Constructs an Iterator containing an array
+		 */
 		public ListIterator() {
 			current = count;
 			shuffledArr = arr;
 		}
 
-		/**
-		 * Returns <code>true</code> if the current size is greater than 0
-		 */
+		@Override
 		public boolean hasNext() {
 			return current > 0;
 		}
 
-		/**
-		 * If an item has a next element,
-		 */
+		@Override
 		public Item next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException("it's empty so can't execute code");
@@ -170,9 +169,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 		}
 
-		/**
-		 * Prevents unspecified removal of an item
-		 */
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException("opperation is unsupported");
 		}

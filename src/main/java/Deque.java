@@ -195,9 +195,7 @@ public class Deque<Item> implements Iterable<Item> {
 			return elem;
 		}
 
-		/**
-		 * Prevents unspecified removal of an item
-		 */
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException("opperation is unsupported");
 		}
