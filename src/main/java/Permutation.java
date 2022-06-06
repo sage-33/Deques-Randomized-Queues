@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 /******************************************************************************
  * Name: Kevin Wayne Login: wayne Precept: P02
@@ -15,7 +16,6 @@ import edu.princeton.cs.algs4.StdOut;
  * most once.
  ******************************************************************************/
 public class Permutation {
-
 	public static void main(String[] args) {
 
 		// add all elements to a randomized queue and then call sample
