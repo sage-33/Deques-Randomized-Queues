@@ -85,12 +85,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 			throw new NoSuchElementException("no elements inside the array");
 		}
 		int random = StdRandom.uniform(count);
-		if (!(count == 1 || count - 1 == random)) {
-			swap(random);
-		}
-		Item item = arr[--count];
-		arr[count] = null;
-		if (count > 1 && count == arr.length / 4)
+		Item item = arr[random];
+		arr[random] = arr[count - 1];
+		count--;
+		// shrink size of array if necessary
+		if (count > 0 && count == arr.length / 4)
 			resize(arr.length / 2);
 		return item;
 	}
@@ -115,22 +114,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 * @param capacity is the number of indexes the new array will have
 	 */
 	private void resize(int capacity) {
+		assert capacity >= count;
 		Item[] copy = (Item[]) new Object[capacity];
 		for (int i = 0; i < count; i++)
 			copy[i] = arr[i];
 		arr = copy;
-	}
-
-	/**
-	 * Swaps the item at index x with the item at the end of the list
-	 * 
-	 * @param x is the index of the item to be swapped
-	 */
-	private void swap(int x) {
-		Item txt;
-		txt = arr[x];
-		arr[x] = arr[count - 1];
-		arr[count - 1] = txt;
 	}
 
 	/**
@@ -145,19 +133,22 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 */
 	private class ListIterator implements Iterator<Item> {
 		private int current; // the current size of the array
-		private final Item[] shuffledArr; // maintains the randomized order of the array
+		private final int[] shuffledArr = new int[count];; // maintains the randomized order of the array
 
 		/**
 		 * Constructs an Iterator containing an array
 		 */
 		public ListIterator() {
 			current = count;
-			shuffledArr = arr;
+			for (int i = 0; i < count; i++) {
+				shuffledArr[i] = i;
+			}
+			StdRandom.shuffle(shuffledArr);
 		}
 
 		@Override
 		public boolean hasNext() {
-			return current > 0;
+			return current < count;
 		}
 
 		@Override
@@ -165,14 +156,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 			if (!hasNext()) {
 				throw new NoSuchElementException("it's empty so can't execute code");
 			}
-			return shuffledArr[--current];
-
+			return arr[shuffledArr[current++]];
 		}
 
 		@Override
 		public void remove() {
 			throw new UnsupportedOperationException("opperation is unsupported");
 		}
+
 	}
 
 	public static void main(String[] args) {

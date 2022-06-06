@@ -115,4 +115,10 @@ public class DequeTest {
 		assertEquals("fourth", list.removeFirst());
 	}
 
+	// exception test
+	@Test(timeout = 500, expected = IllegalArgumentException.class)
+	public void testExceptionOnEmptyAddFirst() {
+		list.addFirst(null);
+	}
+
 }
