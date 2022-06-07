@@ -15,32 +15,38 @@ import edu.princeton.cs.algs4.StdRandom;
  * exactly k of them, uniformly at random. Prints each item from the sequence at
  * most once.
  ******************************************************************************/
+
+/**
+ * @author sagesilberman
+ * 
+ *         A {@link Permutation} represents a program which iterates through
+ *         items from a text file and randomly returns k number of them in a
+ *         random order
+ */
 public class Permutation {
 	public static void main(String[] args) {
 		int numToAdd = Integer.parseInt(args[0]);
 		int addedCount = 0;
-		RandomizedQueue<String> randomQueue = new RandomizedQueue<String>();
-		while (!StdIn.isEmpty()) {
-			String item = StdIn.readString();
-			// always add the first k items
-			if (addedCount == numToAdd) {
-				// then flip a coin, so 50/50 chance that we dequeue an item already // added,
-				// and
-				// enqueue another
-				// because the dequeue is random then the order should be random
-				if (StdRandom.uniform(0, 2) == 0) {
-					randomQueue.dequeue();
-					randomQueue.enqueue(item);
+		int junked = 0;
+		RandomizedQueue<String> littleQueue = new RandomizedQueue<String>();
+		if (numToAdd > 0) {
+			while (!StdIn.isEmpty()) {
+				String item = StdIn.readString();
+				if (addedCount == numToAdd) {
+					if (StdRandom.uniform(0, junked + numToAdd + 1) < numToAdd) {
+						littleQueue.dequeue();
+						littleQueue.enqueue(item);
+					}
+					junked++;
+				} else {
+					littleQueue.enqueue(item);
+					addedCount++;
 				}
-			} else {
-				randomQueue.enqueue(item);
-				addedCount++;
-			}
 
-		}
-		for (int i = 0; i < numToAdd; i++) {
-			StdOut.printf("%s \n", randomQueue.dequeue());
+			}
+			for (int i = 0; i < numToAdd; i++) {
+				StdOut.printf("%s \n", littleQueue.dequeue());
+			}
 		}
 	}
-
 }

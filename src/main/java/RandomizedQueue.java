@@ -14,8 +14,6 @@
  *
  *  Description:  Implementing a Queue that chooses elements at random using an array
  ******************************************************************************/
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -30,9 +28,9 @@ import java.util.NoSuchElementException;
  * @param <Item> generic type of data stored
  */
 public class RandomizedQueue<Item> implements Iterable<Item> {
+	private static final int CAPACITY = 8; // initial capacity of array
 	private int count; // // indicates number of elements stored
 	private Item[] arr; // the array
-	private static final int CAPACITY = 8; // initial capacity of array
 
 	/**
 	 * Constructs an empty randomized queue
