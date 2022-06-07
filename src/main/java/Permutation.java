@@ -17,17 +17,30 @@ import edu.princeton.cs.algs4.StdRandom;
  ******************************************************************************/
 public class Permutation {
 	public static void main(String[] args) {
-
-		// add all elements to a randomized queue and then call sample
-		// have a number of element you enter
-		int number = Integer.parseInt(args[0]);
-		RandomizedQueue<String> littleQueue = new RandomizedQueue<String>();
+		int numToAdd = Integer.parseInt(args[0]);
+		int addedCount = 0;
+		RandomizedQueue<String> randomQueue = new RandomizedQueue<String>();
 		while (!StdIn.isEmpty()) {
 			String item = StdIn.readString();
-			littleQueue.enqueue(item);
+			// always add the first k items
+			if (addedCount == numToAdd) {
+				// then flip a coin, so 50/50 chance that we dequeue an item already // added,
+				// and
+				// enqueue another
+				// because the dequeue is random then the order should be random
+				if (StdRandom.uniform(0, 2) == 0) {
+					randomQueue.dequeue();
+					randomQueue.enqueue(item);
+				}
+			} else {
+				randomQueue.enqueue(item);
+				addedCount++;
+			}
+
 		}
-		for (int i = 0; i < number; i++) {
-			StdOut.printf("%s \n", littleQueue.dequeue());
+		for (int i = 0; i < numToAdd; i++) {
+			StdOut.printf("%s \n", randomQueue.dequeue());
 		}
 	}
+
 }
